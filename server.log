@@ -1,0 +1,11 @@
+
+> frontend@0.0.0 dev
+> vite
+
+
+  VITE v7.3.1  ready in 626 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+7:50:38 PM [vite] .env changed, restarting server...
+7:50:38 PM [vite] server restarted.
