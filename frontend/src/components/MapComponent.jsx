@@ -43,8 +43,9 @@ const MapComponent = ({ ambulanceStart, onRouteCalculated, dronePosition }) => {
         const start = `${ambulanceStart[1]},${ambulanceStart[0]}`;
         const end = `${hospital.position[1]},${hospital.position[0]}`;
 
-        // Use the standard REST API endpoint structure
-        const url = `https://apis.mappls.com/advancedmaps/v1/${API_KEY}/route_adv/driving/${start};${end}?steps=true&geometries=polyline&overview=full`;
+        // Use the standard REST API endpoint structure via local proxy to avoid CORS
+        // Proxy configured in vite.config.js: /api/mappls -> https://apis.mappls.com/advancedmaps/v1
+        const url = `/api/mappls/${API_KEY}/route_adv/driving/${start};${end}?steps=true&geometries=polyline&overview=full`;
 
         try {
             const response = await axios.get(url);
