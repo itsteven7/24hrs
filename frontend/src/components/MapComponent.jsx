@@ -43,7 +43,8 @@ const MapComponent = ({ ambulanceStart, onRouteCalculated, dronePosition }) => {
         const start = `${ambulanceStart[1]},${ambulanceStart[0]}`;
         const end = `${hospital.position[1]},${hospital.position[0]}`;
 
-        const url = `https://route.mappls.com/route/direction/route_adv/driving/${start};${end}?access_token=${API_KEY}`;
+        // Use the standard REST API endpoint structure
+        const url = `https://apis.mappls.com/advancedmaps/v1/${API_KEY}/route_adv/driving/${start};${end}?steps=true&geometries=polyline&overview=full`;
 
         try {
             const response = await axios.get(url);
@@ -54,10 +55,19 @@ const MapComponent = ({ ambulanceStart, onRouteCalculated, dronePosition }) => {
                 if (onRouteCalculated) {
                     onRouteCalculated(decodedPoints);
                 }
+            } else {
+                 console.warn("No routes found in response:", response.data);
+                 alert("No route found.");
             }
         } catch (error) {
             console.error("Error fetching route:", error);
-            alert("Failed to calculate route");
+            if (error.response) {
+                console.error("Response Data:", error.response.data);
+                console.error("Response Status:", error.response.status);
+                alert(`Failed to calculate route. Status: ${error.response.status}. See console for details.`);
+            } else {
+                alert(`Failed to calculate route: ${error.message}`);
+            }
         }
     };
 
